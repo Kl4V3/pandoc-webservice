@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pandopus – Markdown Converter</title>
+
+  <!-- Google Fonts for modern typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Classic ICO -->
+  <link rel="icon" type="image/x-icon" href="/static/pandopus_favicon.ico">
+  <!-- PNG as fallback (e.g., for Safari) -->
+  <link rel="icon" type="image/png" href="/static/pandopus_48x48.png" sizes="48x48">
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+
+<body>
+  <!-- Loader with cancel button -->
+  <div id="loader">
+    <div class="spinner"></div>
+    <button id="cancel-btn" class="cancel-btn">Cancel</button>
+  </div>
+
+  <!-- Hero section as header -->
+  <header class="hero">
+    <div class="hero-content">
+      <img src="/static/pandopus_clear.png" alt="Pandopus Logo" class="hero-logo" />
+      <h1 class="hero-title">Pandopus</h1>
+      <p class="hero-subtitle">- Markdown Converter -</p>
+    </div>
+  </header>
+
+  <!-- Converter section -->
+  <section class="converter-section">
+    <!-- Centered box with max-width 600px -->
+    <div class="converter-card">
+      <h2 class="section-title">Convert your Markdown file</h2>
+
+      <!-- The form -->
+      <form action="/convert" method="post" enctype="multipart/form-data" class="converter-form" id="demo-upload">
+
+        <!-- Modern styled file upload -->
+        <div class="form-group file-upload-group">
+          <label for="markdown_file" class="custom-file-label">
+            Select Markdown file
+          </label>
+          <input type="file" name="markdown_file" id="markdown_file" required />
+        </div>
+
+        <!-- Optional: Select template -->
+        <div class="form-group">
+          <label for="template">LaTeX Template (optional):</label>
+          <select name="template" id="template">
+            <option value="">No Template</option>
+            {% for tmpl in available_templates %}
+            <option value="{{ tmpl }}">{{ tmpl }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <!-- Target format selection with tile design -->
+        <div class="form-group">
+          <label class="label-block">Target Format:</label>
+          <div class="format-tiles">
+            <!-- PDF tile -->
+            <label class="tile">
+              <input type="radio" name="format" value="pdf" checked />
+              <div class="tile-content">
+                <img src="/static/icon_pdf.png" alt="PDF Icon" class="tile-icon" />
+                <span class="tile-text">PDF</span>
+              </div>
+            </label>
+            <!-- Word tile -->
+            <label class="tile">
+              <input type="radio" name="format" value="docx" />
+              <div class="tile-content">
+                <img src="/static/icon_word.png" alt="Word Icon" class="tile-icon" />
+                <span class="tile-text">Word</span>
+              </div>
+            </label>
+            <!-- PNG tile -->
+            <label class="tile">
+              <input type="radio" name="format" value="png" />
+              <div class="tile-content">
+                <img src="/static/icon_png.png" alt="PNG Icon" class="tile-icon" />
+                <span class="tile-text">PNG</span>
+              </div>
+            </label>
+            <!-- EPUB tile -->
+            <label class="tile">
+              <input type="radio" name="format" value="epub" />
+              <div class="tile-content">
+                <img src="/static/icon_epub.png" alt="EPUB Icon" class="tile-icon" />
+                <span class="tile-text">EPUB</span>
+              </div>
+            </label>
+            <!-- HTML tile -->
+            <label class="tile">
+              <input type="radio" name="format" value="html" />
+              <div class="tile-content">
+                <img src="/static/icon_html.png" alt="HTML Icon" class="tile-icon" />
+                <span class="tile-text">HTML</span>
+              </div>
+            </label>
+            <!-- ODT tile -->
+            <label class="tile">
+              <input type="radio" name="format" value="odt" />
+              <div class="tile-content">
+                <img src="/static/icon_odt.png" alt="ODT Icon" class="tile-icon" />
+                <span class="tile-text">ODT</span>
+              </div>
+            </label>
+            <!-- LATEX tile -->
+            <label class="tile">
+              <input type="radio" name="format" value="latex" />
+              <div class="tile-content">
+                <img src="/static/icon_latex.png" alt="LaTeX Icon" class="tile-icon" />
+                <span class="tile-text">LaTeX</span>
+              </div>
+            </label>
+            <!-- RST tile -->
+            <label class="tile">
+              <input type="radio" name="format" value="rst" />
+              <div class="tile-content">
+                <img src="/static/icon_rst.png" alt="RST Icon" class="tile-icon" />
+                <span class="tile-text">RST</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Convert button -->
+        <button type="submit" class="primary-btn">Convert</button>
+      </form>
+      <!-- End of form -->
+    </div><!-- .converter-card -->
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <p>&copy; 2025 Pandopus. Released under the <a href="/static/LICENSE.md">MIT License</a>.</p>
+  </footer>
+
+  <!-- JavaScript: Display loader on form submit -->
+  <script src="/static/js/loader.js"></script>
+  <script>
+    const fileInput = document.getElementById('markdown_file');
+    const fileLabel = document.querySelector('label[for="markdown_file"]');
+  
+    fileInput.addEventListener('change', function() {
+      if (fileInput.files && fileInput.files.length > 0) {
+        fileLabel.textContent = fileInput.files[0].name;
+      } else {
+        fileLabel.textContent = "Select Markdown file";
+      }
+    });
+  </script>
+</body>
+
+</html>

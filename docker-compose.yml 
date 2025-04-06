@@ -1,0 +1,12 @@
+version: '3'
+services:
+  pandoc-webservice:
+    image: theklave/pandoc-webservice:latest
+    container_name: pandoc-webservice
+    ports:
+      - "8777:8777"
+    volumes:
+      - ./latex_templates:/app/latex_templates
+
+volumes:
+  latex_templates:
